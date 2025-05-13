@@ -2,14 +2,14 @@
     {
         "nome": "Davi Lucas",
         "nascimento": "24/10/2005",
-        "cpf": "705.534.634-70",
-        "estado_civil": "Solteiro",
-        "telefone": "(81) 98187-0797",
-        "email": "davipinheiro5002@gmail.com",
+        "cpf": "705.454.644-74",
+        "estado_civil": "Casado",
+        "telefone": "(81) 98187-8492",
+        "email": "davipinheiro@gmail.com",
         "endereco": {
             "cidade": "Recife",
-            "bairro": "Tot�",
-            "rua": "Ratapolis",
+            "bairro": "T",
+            "rua": "R",
             "numero": "26"
         },
         "preferencias_animal": {
