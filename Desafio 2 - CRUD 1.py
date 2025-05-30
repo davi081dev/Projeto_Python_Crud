@@ -150,3 +150,122 @@ print("🐾 Olá! Bem-vindo ao Centro de Adoção Luísa Mel! 🐾")
 linha()
 time.sleep(0.5)
 menu_crud1()
+
+
+//
+
+import json
+import os
+
+ARQUIVO = 'animais.json'
+
+def carregar_animais():
+    if not os.path.exists(ARQUIVO):
+        return []
+    try:
+        with open(ARQUIVO, 'r') as f:
+            conteudo = f.read().strip()
+            if not conteudo:
+                return []  
+            return json.loads(conteudo)
+    except json.JSONDecodeError:
+        print("⚠️ Erro: O arquivo JSON está corrompido ou mal formatado.")
+        return []
+
+def salvar_animais(animais):
+    with open(ARQUIVO, 'w') as f:
+        json.dump(animais, f, indent=2)
+
+def criar_animal(nome, especie, idade):
+    animais = carregar_animais()
+    novo_id = 1 if not animais else animais[-1]['id'] + 1
+    novo_animal = {
+        "id": novo_id,
+        "nome": nome,
+        "especie": especie,
+        "idade": idade
+    }
+    animais.append(novo_animal)
+    salvar_animais(animais)
+    print(f"Animal '{nome}' cadastrado com sucesso!")
+
+def listar_animais():
+    animais = carregar_animais()
+    if not animais:
+        print("Nenhum animal cadastrado.")
+    else:
+        for animal in animais:
+            print(f"ID: {animal['id']} | Nome: {animal['nome']} | Espécie: {animal['especie']} | Idade: {animal['idade']} anos")
+
+def atualizar_animal(id, nome=None, especie=None, idade=None):
+    animais = carregar_animais()
+    for animal in animais:
+        if animal['id'] == id:
+            if nome: animal['nome'] = nome
+            if especie: animal['especie'] = especie
+            if idade is not None: animal['idade'] = idade
+            salvar_animais(animais)
+            print(f"Animal ID {id} atualizado com sucesso!")
+            return
+    print("Animal não encontrado.")
+
+def deletar_animal(id):
+    animais = carregar_animais()
+    novos_animais = [a for a in animais if a['id'] != id]
+    if len(animais) == len(novos_animais):
+        print("Animal não encontrado.")
+        return
+    salvar_animais(novos_animais)
+    print(f"Animal ID {id} removido com sucesso.")
+
+def buscar_animal(id):
+    animais = carregar_animais()
+    for animal in animais:
+        if animal['id'] == id:
+            print(f"ID: {animal['id']} | Nome: {animal['nome']} | Espécie: {animal['especie']} | Idade: {animal['idade']} anos")
+            return
+    print("Animal não encontrado.")
+
+
+
+def menu():
+    while True:
+        print("\n=== Clínica de Adoção ===")
+        print("1. Listar animais")
+        print("2. Cadastrar novo animal")
+        print("3. Atualizar animal")
+        print("4. Remover animal")
+        print("5. Buscar animal")
+        print("6. Sair")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1':
+            listar_animais()
+        elif opcao == '2':
+            nome = input("Nome: ")
+            especie = input("Espécie: ")
+            idade = int(input("Idade: "))
+            criar_animal(nome, especie, idade)
+        elif opcao == '3':
+            id = int(input("ID do animal a atualizar: "))
+            nome = input("Novo nome (ou Enter para manter): ")
+            especie = input("Nova espécie (ou Enter para manter): ")
+            idade_str = input("Nova idade (ou Enter para manter): ")
+            idade = int(idade_str) if idade_str else None
+            atualizar_animal(id, nome or None, especie or None, idade)
+        elif opcao == '4':
+            id = int(input("ID do animal a remover: "))
+            deletar_animal(id)
+        elif opcao == '5':
+            id = int(input("ID do animal a buscar: "))
+            buscar_animal(id)
+
+        elif opcao == '6':
+            print("Saindo...")
+            break
+        else:
+            print("Opção inválida.")
+
+menu()
+
