@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "70553463470": {
         "Nome": "Davi Lucas da Silva Pinheiro",
@@ -36,3 +37,34 @@
         "Condicoes de interesse": "N\u00e3o"
     }
 }
+=======
+[
+    {
+        "nome": "Davi Lucas",
+        "nascimento": "24/10/2005",
+        "cpf": "705.454.644-74",
+        "estado_civil": "Casado",
+        "telefone": "(81) 98187-8492",
+        "email": "davipinheiro@gmail.com",
+        "endereco": {
+            "cidade": "Recife",
+            "bairro": "T",
+            "rua": "R",
+            "numero": "26"
+        },
+        "preferencias_animal": {
+            "animal": "Husky",
+            "raca": "Vira-lata",
+            "sexo": "Macho",
+            "porte": "M�dia",
+            "faixa_etaria": "05 anos",
+            "condicoes": "Sim"
+        },
+        "termos": {
+            "termo_reponsabilidade": "312433",
+            "autorizacao": "2342",
+            "permissao": "432423"
+        }
+    }
+]
+>>>>>>> 0cdfcf5d46acbc113f0200b273a739d7fa333dc6
