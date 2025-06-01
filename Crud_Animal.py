@@ -55,7 +55,7 @@ def salvar_animais(animais):
 
 def criar_animal(nome, especie, idade):
     animais = carregar_animais()
-    novo_id = 1 if not animais else animais[-1]['id'] + 1
+    novo_id = max((a['id'] for a in animais), default=0) + 1
     novo_animal = {
         "id": novo_id,
         "nome": nome,
@@ -117,13 +117,14 @@ def buscar_animal():
             except ValueError:
                 invalid()
                 continue
-                
+
         if len(encontrados) == 1:
             animal = encontrados[0]
             time.sleep(0.5)
             linha()
             print(f"ID: {animal['id']} | Nome: {animal['nome']} | Espécie: {animal['especie']} | Idade: {animal['idade']}")
             add()
+
         else:
             print(f"⚠️  Foram encontrados {len(encontrados)} animais com o nome '{nome_input}':")
             for a in encontrados:
@@ -140,7 +141,11 @@ def deletar_animal():
         invalid()
 
     animais = carregar_animais()
-    animal = next((a for a in animais if a['id'] == int(id_delete)), None)
+    try:
+        animal = next((a for a in animais if a['id'] == int(id_delete)), None)
+    except ValueError:
+        invalid()
+        return
 
     if not animal:
         print("🧠 Buscando dados")
@@ -156,6 +161,7 @@ def deletar_animal():
                     add()
         except ValueError:
             invalid()
+
     else:
             print("🧠 Buscando dados")
             time.sleep(0.5)
@@ -170,7 +176,7 @@ def deletar_animal():
                     case 1:
                         animais = [a for a in animais if a['id'] != id_delete]
                         time.sleep(0.5)
-                        print("\n🗑️ Deletando...")
+                        print("\n🗑️  Deletando...")
                         time.sleep(0.5)
                         salvar_animais(animais)
                         print(f"\n✅ Cadastro nº {id_delete} excluído com sucesso.\n")
@@ -199,7 +205,7 @@ def atualizar_animal():
                     atualizar_animal()
                 case 2:
                     add()
-        except ValueError
+        except ValueError:
             invalid()
 
     if len(encontrados) > 1:
@@ -226,6 +232,7 @@ def atualizar_animal():
                 add()
     except ValueError:
         invalid()
+        
     try:
             confirm = int(input("\n🤔 Confirma a atualização?\n1️⃣  Sim\n2️⃣  Não\n"))
             match confirm:
@@ -244,6 +251,7 @@ def atualizar_animal():
                 case 2:
                     print("❌ Atualização cancelada.")
                     add()
+                    return
     except ValueError:
         invalid()
 
