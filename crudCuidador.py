@@ -7,9 +7,9 @@ def carregar_dados():
             return json.load(arquivo)
     return {}
 
-def salvar_dados(dados):
+def salvar_dados(dados): 
     with open("dados.json", "w") as arquivo:
-        json.dump(dados, arquivo, indent=4)
+        json.dump(dados, arquivo, indent=4) 
 
 def cadastrar_usuario(dados):
     print("\n🦴\033[30;47m Olá, bem-vindo à área de cadastro dos adotantes de animais. \033[m🦴")
@@ -23,10 +23,10 @@ def cadastrar_usuario(dados):
         if (cpf == 'sair'):
             return
         elif cpf in dados:
-            print("\033[31mCPF já cadastrado, tente novamente\033[m")
+            print("\033[31m❌ CPF já cadastrado, tente novamente\033[m")
         else:
             dados[cpf] = {"nome": nome, "idade": idade, "telefone": telefone, "sexo": sexo}
-            print("\033[32mUsuário cadastrado com sucesso.\033[m")
+            print("\033[32m✅ Usuário cadastrado com sucesso.\033[m")
             salvar_dados(dados)
             return
         
@@ -37,40 +37,44 @@ def remover_usuario(dados):
             return
         else:
             while True:
-                cpf_remover = input("\nInforme o CPF que você deseja remover: ")
-                if cpf_remover in dados:
-                    del dados[cpf_remover]
-                    salvar_dados(dados)
-                    print(f"\033[32mUsuário removido com sucesso.\033[m")
-
-                    while True:
-                        op01 = str(input("\nDeseja remover outro usuário ? (sim/não) "))
-
-                        if (op01 != 'sim' and op01 != 'nao'):
-                            print("\033[31mOpção invalida, tente novamente:\033[m ")
-
-                        elif (op01 != 'sim'):
-                            print("\033[32mVoltando pro menu...\033[m")
-                            return
-                        
-                        else:
-                            break
-
+                if not dados:
+                    print("\n\033[31mTodos os usuários já foram removidos.\033[m")
+                    break
                 else:
-                    print("\033[31mUsuário não encontrado.\033[m")
+                    cpf_remover = input("\nInforme o CPF que você deseja remover: ")
+                    if cpf_remover in dados:
+                        del dados[cpf_remover]
+                        salvar_dados(dados)
+                        print(f"\033[32m✅ Usuário removido com sucesso.\033[m")
 
-                    while True:
-                        opcao02=str(input("\nDeseja tentar novamente ? (sim/não) "))
+                        while True:
+                            op01 = str(input("\nDeseja remover outro usuário ? (sim/não) "))
 
-                        if (opcao02 != 'sim' and opcao02 != 'nao'):
-                            print("\033[31mOpção invalida\033[m")
-                    
-                        elif (opcao02 != 'sim'):
-                            print("\n\033[32mVoltando para o menu...\033[m")
-                            return
+                            if (op01 != 'sim' and op01 != 'nao'):
+                                print("\033[31m❌ Opção invalida, tente novamente:\033[m ")
+
+                            elif (op01 != 'sim'):
+                                print("\033[32m↩️  Voltando pro menu...\033[m")
+                                return
+                            
+                            else:
+                                break
+
+                    else:
+                        print("\033[31m❌ Usuário não encontrado.\033[m")
+
+                        while True:
+                            opcao02=str(input("\nDeseja tentar novamente ? (sim/não) "))
+
+                            if (opcao02 != 'sim' and opcao02 != 'nao'):
+                                print("\033[31mOpção invalida\033[m")
                         
-                        else:
-                            break
+                            elif (opcao02 != 'sim'):
+                                print("\n\033[32m↩️  Voltando para o menu...\033[m")
+                                return
+                            
+                            else:
+                                break
 
 
 def editar_usuario(dados):
@@ -80,39 +84,41 @@ def editar_usuario(dados):
         else:
             while True:
                 cpf_edt = input("\nInforme o CPF do usuário que você deseja editar: ")
+
                 if cpf_edt in dados:
-                    print("\n\033[31;47m Deixe em branco para manter o valor atual. \033[m")
-                    nome = input(f"Novo nome ({dados[cpf_edt]['nome']}): ") or dados[cpf_edt]['nome']
+                    print("\n\033[31;47m⚠️   Deixe em branco para manter o valor atual. ⚠️  \033[m")
+                    nome = input(f"\nNovo nome ({dados[cpf_edt]['nome']}): ") or dados[cpf_edt]['nome']
                     idade = input(f"Nova idade ({dados[cpf_edt]['idade']}): ") or dados[cpf_edt]['idade']
                     telefone = input(f"Novo telefone ({dados[cpf_edt]['telefone']}): ") or dados[cpf_edt]['telefone']
                     sexo = input(f"Novo sexo ({dados[cpf_edt]['sexo']}): ") or dados[cpf_edt]['sexo']
+
                     dados[cpf_edt] = {"nome": nome, "idade": idade, "telefone": telefone, "sexo": sexo}
                     salvar_dados(dados)
-                    print("\033[32mUsuário editado com sucesso.\033[32m")
+                    print("\033[32m✅ Usuário editado com sucesso.\033[m")
 
                     while True:
                         op02=str(input("\nDeseja editar outro usuário ? (sim/não) "))
 
                         if (op02 != 'sim' and op02 != 'nao'):
-                            print("\033[31mOpção invalida, tente novamente.\033[m")
+                            print("\033[31m❌ Opção invalida, tente novamente.\033[m")
 
                         elif (op02 != 'sim'):
-                            print("\n\033[32mVoltandopro menu...\033[m")
+                            print("\n\033[32m↩️  Voltandopro menu...\033[m")
                             return
                         
                         else:
                             break
 
                 else:
-                    print("\033[31mUsuário não encontrado.\033[m")
+                    print("\033[31m❌ Usuário não encontrado.\033[m")
 
                     while True:
                         opcao03=str(input("\nDeseja tentar novamente ? (sim/não) "))
                         if (opcao03 != 'sim' and opcao03 != 'nao'):
-                            print("\033[31mOpção invalida\033[m")
+                            print("\033[31m❌ Opção invalida\033[m")
                         
                         elif (opcao03 != 'sim'):
-                            print("\n\033[32mVoltando para o menu...\033[m")
+                            print("\n\033[32m↩️  Voltando para o menu...\033[m")
                             return
                         
                         else:
@@ -131,11 +137,11 @@ def listar_usuarios(dados):
         opcao04=str(input("\nDigite 'sair' para voltar pro menu: "))
 
         if (opcao04 == 'sair'):
-            print("\n\033[32mVoltando...\033[m")
-            return
+             print("\n\033[32m↩️  Voltando...\033[m")
+             return
         
         else:
-            print("\033[31mOpção invalida, tente novamente:\033[m")
+            print("\033[31m❌ Opção invalida, tente novamente:\033[m")
 
 
 def buscar_usuario(dados):
@@ -156,25 +162,25 @@ def buscar_usuario(dados):
                     op03=str(input("\nDeseja buscar outro usuário ? (sim /não) "))
 
                     if (op03 != 'sim' and op03 != 'nao'):
-                        print("\033[31mOpção invalida, tente novamente:\033[m")
+                        print("\033[31m❌ Opção invalida, tente novamente:\033[m")
 
                     elif (op03 != 'sim'):
-                        print("\n\033[32mVoltando pro menu...\033[m")
+                        print("\n\033[32m↩️  Voltando pro menu...\033[m")
                         return
                     
                     else:
                         break
             else:
-                print("\033[31mUsuário não encontrado.\033[m")
+                print("\033[31m❌ Usuário não encontrado.\033[m")
 
                 while True:
                     opcao05=str(input("\nDeseja tentar novamente ? (sim/não) "))
 
                     if (opcao05 != 'sim' and opcao05 != 'nao'):
-                        print("\033[31mOpção invalida, tente novamente:\033[m")
+                        print("\033[31m❌ Opção invalida, tente novamente:\033[m")
 
                     elif (opcao05 != 'sim'):
-                        print("\n\033[32mVoltando para o menu...\033[m")
+                        print("\n\033[32m↩️  Voltando para o menu...\033[m")
                         return
 
                     else:
@@ -185,6 +191,7 @@ def menu_adm(dados):
     while True:
         senha = input("\nInforme a senha ou digite 'sair' para voltar: ")
         if senha == 'sair':
+            print("↩️  \033[32mVoltando...\033[m")
             return
         if senha == 'gruponota10':
             print("\n\033[47mDADOS DOS USUÁRIOS:\033[m")
@@ -196,15 +203,15 @@ def menu_adm(dados):
                 print(f"\033[35mSexo: {dados[cpf]['sexo']}\033[m")
             break
         else:
-            print("\033[31mSenha incorreta, tente novamente:\033[m")
+            print("\033[31m❌ Senha incorreta, tente novamente:\033[m")
 
     while True:
         voltar = input("\nDigite 'sair' para voltar pro menu: ")
         
         if voltar == 'sair':
-            print("\n\033[32mVoltando...\033[m")
+            print("\n\033[32m↩️  Voltando...\033[m")
             return
-        print("\033[31mErro, tente novamente:\033[m")
+        print("\033[31m❌ Erro, tente novamente: ❌\033[m")
 
 
 def crud_cpf_cuidador():
@@ -241,5 +248,7 @@ def crud_cpf_cuidador():
         elif opcao == 7:
             menu_adm(dados)
         else:
-            print("Opção inválida.")
+            print("\n❌❌ Opção inválida, tente novamente ❌❌")
 
+
+crud_cpf_cuidador()
