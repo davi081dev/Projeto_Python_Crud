@@ -15,7 +15,7 @@ def encontrar_match(adotante, animais):
     for animal in animais:
         if (adotante["Animal de interesse"].lower() == animal["especie"].lower() and
             adotante["Raca de interesse"].lower() == animal["raca"].lower() and
-            adotante["Faixa etaria de interesse"] == animal["idade"] and
+            adotante["Faixa etaria de interesse"] <= animal["idade"] and
             adotante["Condicoes de interesse"].lower() == "sim"):
             return animal
     return None
