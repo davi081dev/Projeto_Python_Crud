@@ -3,15 +3,16 @@ import os
 import crudAnimal
 import crudCuidador
 import crudAdotante
-import adocaoInteligente
 from time import sleep
 
+def adotar():
+    print("Adotando...")
 
 def menu_inicial_da_escolha_do_crud():
     print("Escolha o que deseja fazer: ")
-    print("1. Cadastrar um animal")
-    print("2. Cadastrar um cuidador")
-    print("3. Cadastrar um adotante")
+    print("1. Menu animal")
+    print("2. Menu cuidador")
+    print("3. Menu adotante")
     print("4. Encontrar um pet")
     print("5. Encerrar o programa")
     sleep(1)
@@ -42,7 +43,7 @@ def main ():
             case 3:
                 crudAdotante.crud_cpf_adotante()
             case 4:
-                adocaoInteligente.adotar()
+                adotar()
             case 5:
                 print("Encerrando...")
                 sleep(2)

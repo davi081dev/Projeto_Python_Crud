@@ -1,5 +1,4 @@
 import time
-import sys
 import json
 import os
 
@@ -9,16 +8,15 @@ def linha():
     print("-" * 60)
 
 def add():
-    while True:
-        add1 = input("\n❔ Deseja algo mais?\n1️⃣  Sim\n2️⃣  Não\n")
-        if add1 == "1":
-            time.sleep(0.5)
-            return
-        elif add1 == "2":
-            time.sleep(1)
-            end()   
-        else:
-            invalid()
+
+    add1 = input("\n❔ Deseja algo mais?\n1️⃣  Sim\n2️⃣  Não\n")
+    if add1 == "1":
+        time.sleep(0.5)
+        return
+    elif add1 == "2":
+        time.sleep(1) 
+    else:
+        invalid()
 
 def invalid():
     print("🤭 Oops... Não localizei a opção informada.")
@@ -34,7 +32,6 @@ def end():
     time.sleep(1)
     print("🐶 Au au!")
     time.sleep(1)
-    sys.exit()
 
 def carregar_animais():
     if not os.path.exists(ARQUIVO):
@@ -53,14 +50,16 @@ def salvar_animais(animais):
     with open(ARQUIVO, 'w') as f:
         json.dump(animais, f, indent=2)
 
-def criar_animal(nome, especie, idade):
+def criar_animal(nome, especie, raca, porte, idade, enfermidade):
     animais = carregar_animais()
     novo_id = max((a['id'] for a in animais), default=0) + 1
     novo_animal = {
         "id": novo_id,
         "nome": nome,
         "especie": especie,
-        "idade": idade
+        "raca": raca,
+        "idade": idade,
+        "enfermidade": enfermidade
     }
     animais.append(novo_animal)
     salvar_animais(animais)
@@ -93,8 +92,7 @@ def listar_animais():
             tentativas += 1
             time.sleep(0.5)
             print(f"❌ Senha incorreta. Tentativa {tentativas}/3.\n")
-    print("🚫 Número máximo de tentativas excedido. Você será desconectado do sistema.\n")
-    end()
+    print("🚫 Número máximo de tentativas excedido.\n")
 
 
 def buscar_animal():
@@ -266,23 +264,6 @@ def ask_geral(sim_nao):
         else:
             invalid()
 
-def ask_foto(foto):
-    while True:
-        resp2 = input(foto).strip().lower()
-        if resp2 == "sim":
-            print("🤳 Insira a foto:")
-            time.sleep(1)
-            linha()
-            print("⬆️  Uploading...")
-            linha()
-            time.sleep(1)
-            break
-        elif resp2 in ("não", "nao"):
-            time.sleep(1)
-            break
-        else:
-            invalid()
-
 def info():
     while True:
         info_add = input("\n❓ Deseja adicionar alguma informação complementar?\n1️⃣  Sim\n2️⃣  Não\n")
@@ -300,8 +281,13 @@ def info():
         else:
             invalid()
 
-def menu_crud1():
+def crud_cpf_animal():
     while True:
+        linha()
+        print("🐾 Olá! Bem-vindo ao Centro de Adoção Luísa Mel! 🐾")
+        linha()
+        time.sleep(0.5)
+        print("🔢 Informe o número correspondente à opção que deseja: 👇")
         print("\n1️⃣  Cadastrar animal") #OK
         print("2️⃣  Localizar animal") #OK
         print("3️⃣  Atualizar o cadastro de um animal") #OK
@@ -321,11 +307,12 @@ def menu_crud1():
                 time.sleep(0.5)
                 nome = input("\n📛 Qual o nome do bichinho? ").upper()
                 especie = input("🤔 Qual a espécie do bichinho? (ex.: gato, cachorro, hamster...) ").upper()
+                raca = input("🤔 Qual a raça do bichinho? ").upper()
+                porte = input("🤔 Qual a porte do bichinho? (Pequeno, medio ou grande)").upper()
                 idade = input("🔢 Qual a idade estimada do bichinho? ")
-                ask_geral("😷 Ele possui algum tipo de enfermidade? ")
-                ask_geral("➕ Deseja inserir mais alguma informação adicional? ")
-                ask_foto("📸 Deseja inserir alguma foto do animal? ")
-                criar_animal(nome, especie, idade)
+                enfermidade = input("😷 Ele possui algum tipo de enfermidade?(Sim ou Nao) ").upper()
+                foto = input("📸 Deseja inserir alguma foto do animal? ")
+                criar_animal(nome, especie, raca, porte, idade, enfermidade)
             case 2:
                 buscar_animal()
             case 3:
@@ -349,12 +336,6 @@ def menu_crud1():
             case 7:
                 end()
                 break
+            
             case _:
                 invalid()
-
-linha()
-print("🐾 Olá! Bem-vindo ao Centro de Adoção Luísa Mel! 🐾")
-linha()
-time.sleep(0.5)
-print("🔢 Informe o número correspondente à opção que deseja: 👇")
-menu_crud1()

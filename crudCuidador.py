@@ -244,11 +244,9 @@ def crud_cpf_cuidador():
             buscar_usuario(dados)
         elif opcao == 6:
             salvar_dados(dados)
-            break
+            return
         elif opcao == 7:
             menu_adm(dados)
         else:
             print("\n❌❌ Opção inválida, tente novamente ❌❌")
 
-
-crud_cpf_cuidador()

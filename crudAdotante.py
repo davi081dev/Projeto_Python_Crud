@@ -194,7 +194,7 @@ def buscar_adotantes(dados_adotante):
     else:
         print("\033[31mAdotante não encontrado.\033[m")
 
-def menu_adotante():
+def crud_cpf_adotante():
     dados_adotante = carregar_dados()
     
     print("-" * 40)
@@ -231,5 +231,3 @@ def menu_adotante():
             buscar_adotantes(dados_adotante)
         else:
             print("Opção inválida.")
-
-menu_adotante()
