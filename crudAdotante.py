@@ -389,4 +389,3 @@ def crud_cpf_adotante():
             return
         else:
             print("Opção Inválida. Por favor, digite um número de 1 a 6")                
-crud_cpf_adotante()
